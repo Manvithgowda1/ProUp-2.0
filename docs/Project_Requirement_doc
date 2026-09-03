@@ -1,0 +1,148 @@
+# Project Requirement Document (PRD)
+
+## 1. Project Overview
+
+**Project Name:** Proup (Professional Upgrade)
+
+**Project Type:** Web Application
+
+**Prepared For:** Development Team
+
+**Audience:** Technical (Dev Team)
+
+**Team Size:** 1 (Solo Developer)
+
+**Project Category:** College/Academic Project
+
+**Target Timeline:** 4 months
+
+---
+
+## 2. Problem Statement
+
+The IT industry is increasingly moving toward skill-based hiring, but current evaluation methods still rely heavily on academic marks and unverified profiles. This creates a mismatch between how candidates are evaluated and what the industry actually needs.
+
+**Key Issues:**
+- High-scoring students often lack job-ready, practical skills.
+- Skilled students are frequently overlooked due to lower academic marks.
+- Resumes and LinkedIn profiles can be easily exaggerated or falsified.
+
+**Resulting Impact:**
+- HR teams struggle to identify genuinely talented candidates.
+- Skilled candidates miss out on good opportunities.
+- Companies face poor hiring outcomes due to unreliable evaluation signals.
+
+---
+
+## 3. Proposed Solution
+
+Proup is a platform that shifts the focus from academic scores to verifiable, event-based skill demonstration. Students participate in events (hackathons, workshops, competitions, etc.), build a track record of verified achievements, and receive personalized event recommendations based on their skills and interests — creating a more authentic, verifiable alternative to traditional resumes.
+
+---
+
+## 4. User Roles
+
+| Role | Description |
+|------|-------------|
+| **Student** | Registers on the platform, browses/registers for events, receives event recommendations, and builds an achievements profile. |
+| **Organizer** | Creates and manages events, tracks registrations, and (implicitly) validates student participation/achievements. |
+| **Admin** | Oversees platform activity — manages users, organizers, and events; ensures content/data integrity. |
+
+---
+
+## 5. Key Features (MVP Scope)
+
+### 5.1 Events Display
+- Public listing of all upcoming/ongoing events.
+- Event detail view (description, date, organizer, eligibility, etc.).
+
+### 5.2 Achievements Page
+- Student-facing profile page displaying verified achievements/participation history.
+- Acts as the "verified alternative" to a traditional resume.
+
+### 5.3 Events Recommendation System
+- Recommends events to students based on their **skills and interests**.
+- Requires students to have a skill/interest profile that the system can match against.
+
+### 5.4 Organizer Event Creation
+- Organizers can create, edit, and manage events (title, description, date, category, eligibility, capacity, etc.).
+
+### 5.5 Student Event Registration
+- Students can browse and register for events.
+- Registration history feeds into the achievements profile.
+
+### 5.6 Admin Panel (implied by Admin role)
+- Manage users (students/organizers), moderate events, and oversee platform activity.
+
+> **Note:** Admin-specific features weren't detailed in requirements gathering — recommend a follow-up discussion to scope this precisely before development.
+
+---
+
+## 6. Out of Scope (for MVP)
+
+- AI/ML-based deep personalization (recommendation system is skill/interest-based matching, not ML-driven, for MVP).
+- Payment/monetization features.
+- Direct HR/company-side hiring portal integration (mentioned in problem statement but not in feature list — flagged for clarification).
+
+---
+
+## 7. Technical Requirements
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React |
+| Backend | Python (framework TBD — e.g., Django/FastAPI/Flask) |
+| Database | PostgreSQL |
+
+**Recommendations for solo development:**
+- Consider a Python framework with strong built-in admin tooling (e.g., **Django**) to speed up Admin Panel development given the 1-person team.
+- Use REST or GraphQL API between React frontend and Python backend — to be finalized during technical design.
+
+---
+
+## 8. Assumptions
+
+- Students will need to set up a skill/interest profile for the recommendation system to function.
+- Organizers are a distinct, verified user type (verification process TBD).
+- Achievements are derived primarily from event participation (not third-party verification, for MVP).
+
+---
+
+## 9. Constraints
+
+- **Team size:** 1 developer — timeline and scope should be realistic for solo execution.
+- **Timeline:** 4 months total (design, development, testing, deployment).
+- **Budget:** College/academic project — assume minimal to no budget for paid tools/infrastructure; prefer free-tier/open-source solutions.
+
+---
+
+## 10. Open Questions (Recommend Clarifying Before Development)
+
+1. Should companies/HR be a user role in a future phase, given they're central to the problem statement?
+2. What defines a "verified" achievement — is organizer confirmation sufficient, or is additional validation needed?
+3. What specific admin capabilities are required (user management, event moderation, analytics)?
+4. Is authentication/login (student, organizer, admin) considered part of this feature set? (Assumed yes, but not explicitly listed.)
+5. Should the recommendation system evolve to ML-based matching in a later phase?
+
+---
+
+## 11. High-Level Timeline (4 Months — Suggested Breakdown)
+
+| Phase | Duration | Focus |
+|-------|----------|-------|
+| Phase 1 | Weeks 1–2 | Requirements finalization, wireframes, DB schema design |
+| Phase 2 | Weeks 3–8 | Core development — auth, events display, event creation, registration |
+| Phase 3 | Weeks 9–12 | Achievements page, recommendation system, admin panel |
+| Phase 4 | Weeks 13–15 | Testing, bug fixes, polish |
+| Phase 5 | Week 16 | Deployment & final review |
+
+*(Suggested breakdown — adjust based on actual complexity discovered during development.)*
+
+---
+
+## 12. Success Criteria
+
+- Students can register, browse events, and view a personal achievements page.
+- Organizers can create and manage events end-to-end.
+- Recommendation system surfaces relevant events based on student skills/interests.
+- Platform is stable and deployed within the 4-month timeline.
