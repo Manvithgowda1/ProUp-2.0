@@ -131,7 +131,7 @@ SHORTLIST
        ▼
      HIRING
 
-     organizer side:
+organizer side:
 
      ORGANIZER LOGIN
        │
