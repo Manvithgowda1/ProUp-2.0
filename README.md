@@ -150,19 +150,20 @@ proup/
 
 ### Backend
 
-* Node.js
-* Express.js
-* TypeScript
+* Python 3.12+
+* FastAPI (REST APIs, OpenAPI / Swagger)
+* SQLAlchemy 2.0 (Async ORM)
+* Alembic (Database Migrations)
 
 ### Database
 
-* PostgreSQL
-* Prisma ORM
+* PostgreSQL (Production) / SQLite Async (Local Dev)
+* 22 Relational Tables (Normalized ER Schema)
 
 ### Authentication
 
-* JWT / Session-based authentication
-* Role-based access control (RBAC)
+* OAuth2 Bearer Tokens (JWT with bcrypt hashing)
+* Role-based access control (Student, Organizer, Admin)
 
 ### Development
 
@@ -315,12 +316,11 @@ Detailed documentation will be maintained inside the `docs/` directory.
 
 ```text
 docs/
-├── architecture.md
-├── authentication.md
+├── Project_Requirement_doc.md
+├── Architecture.md
+├── backend_architecture.md
 ├── database.md
-├── api.md
-├── roles-and-permissions.md
-└── deployment.md
+└── api.md
 ```
 
 ---
