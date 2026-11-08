@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventHub - Create Your Event</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, #812a97, #512da8);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        /* Back Button */
+        .back-button {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+            min-height: 80vh;
+        }
+
+        /* Event Form Section */
+        .event-form-section {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(to right, #812a97, #512da8);
+            color: white;
+            padding: 25px 30px;
+        }
+
+        .form-header h3 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-body {
+            padding: 30px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-footer {
+            padding: 20px 30px;
+            background-color: var(--light-gray);
+            text-align: right;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e11570;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(241, 37, 133, 0.3);
+        }
+
+        /* Success Section (Hidden by default) */
+        .success-section {
+            display: none;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #4cc9f0, #4361ee);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            color: white;
+            font-size: 3.5rem;
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .success-section h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .success-section p {
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        .event-details-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .event-details-card h3 {
+            color: var(--secondary);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-gray);
+        }
+
+        .event-detail {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .event-detail-label {
+            font-weight: 600;
+            width: 150px;
+            color: var(--dark);
+        }
+
+        .event-detail-value {
+            flex: 1;
+            color: var(--gray);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: #d8dde3;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 30px 0 20px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copyright {
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .back-button {
+                left: 10px;
+            }
+            
+            .logo {
+                margin-left: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <button class="back-button" id="back-button">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Event Place</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            <!-- Event Form Section -->
+            <section class="event-form-section" id="event-form">
+                <div class="section-title">
+                    <h2>Create Your Event</h2>
+                    <p>Fill out the form below to set up your event and start selling tickets</p>
+                </div>
+                <div class="form-container">
+                    <div class="form-header">
+                        <h3><i class="fas fa-plus-circle"></i> Event Details</h3>
+                    </div>
+                    <div class="form-body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-name">Event Name *</label>
+                                <input type="text" id="event-name" class="form-control" placeholder="Enter event name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-category">Event Category *</label>
+                                <select id="event-category" class="form-control" required>
+                                    <option value="">Select category</option>
+                                    <option value="conference">Conference</option>
+                                    <option value="workshop">Workshop</option>
+                                    <option value="concert">Concert</option>
+                                    <option value="networking">Networking</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-date">Event Date *</label>
+                                <input type="date" id="event-date" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="event-time">Event Time *</label>
+                                <input type="time" id="event-time" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="event-location">Event Location *</label>
+                                <input type="text" id="event-location" class="form-control" placeholder="Venue or online event link" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="total-slots">Total Slots Available *</label>
+                                <input type="number" id="total-slots" class="form-control" placeholder="Maximum attendees" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ticket-price">Ticket Price ($)</label>
+                                <input type="number" id="ticket-price" class="form-control" placeholder="0 for free event" min="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-description">Event Description *</label>
+                            <textarea id="event-description" class="form-control" placeholder="Describe your event in detail..." required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-footer">
+                        <button class="btn btn-primary" id="create-event-btn">Create Event</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Success Section -->
+            <section class="success-section" id="success-section">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <h2>Event Created Successfully!</h2>
+                <p>Your event has been created and is now live. You can share it with your audience or manage it from your dashboard.</p>
+                
+                <div class="event-details-card">
+                    <h3>Event Summary</h3>
+                    <div class="event-detail">
+                        <div class="event-detail-label">Event Name:</div>
+                        <div class="event-detail-value" id="summary-name">-</div>
+                    </div>
+                    <div class="event-detail">
+                        <div class="event-detail-label">Date & Time:</div>
+                        <div class="event-detail-value" id="summary-date">-</div>
+                    </div>
+                    <div class="event-detail">
+                        <div class="event-detail-label">Location:</div>
+                        <div class="event-detail-value" id="summary-location">-</div>
+                    </div>
+                    <div class="event-detail">
+                        <div class="event-detail-label">Available Slots:</div>
+                        <div class="event-detail-value" id="summary-slots">-</div>
+                    </div>
+                    <div class="event-detail">
+                        <div class="event-detail-label">Ticket Price:</div>
+                        <div class="event-detail-value" id="summary-price">-</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="create-another-btn">Create Another Event</button>
+                    <button class="btn btn-primary" id="view-dashboard-btn">View in Dashboard</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="copyright">
+                    &copy; 2023 EventHub. All rights reserved.
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set minimum date to today for event date
+            document.getElementById('event-date').min = new Date().toISOString().split('T')[0];
+            
+            // Form submission handler
+            document.getElementById('create-event-btn').addEventListener('click', function() {
+                const eventName = document.getElementById('event-name').value;
+                const eventDate = document.getElementById('event-date').value;
+                const eventTime = document.getElementById('event-time').value;
+                const eventLocation = document.getElementById('event-location').value;
+                const totalSlots = document.getElementById('total-slots').value;
+                const ticketPrice = document.getElementById('ticket-price').value;
+                
+                if(eventName && eventDate && eventTime && eventLocation && totalSlots) {
+                    // Update success summary
+                    document.getElementById('summary-name').textContent = eventName;
+                    
+                    // Format date for display
+                    const dateObj = new Date(eventDate);
+                    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                    const formattedDate = dateObj.toLocaleDateString('en-US', options);
+                    document.getElementById('summary-date').textContent = formattedDate + ' at ' + eventTime;
+                    
+                    document.getElementById('summary-location').textContent = eventLocation;
+                    document.getElementById('summary-slots').textContent = totalSlots;
+                    
+                    if(ticketPrice && ticketPrice > 0) {
+                        document.getElementById('summary-price').textContent = '$' + ticketPrice;
+                    } else {
+                        document.getElementById('summary-price').textContent = 'Free';
+                    }
+                    
+                    // Hide form and show success section
+                    document.getElementById('event-form').style.display = 'none';
+                    document.getElementById('success-section').style.display = 'block';
+                } else {
+                    alert('Please fill in all required fields');
+                }
+            });
+            
+            // Create another event button
+            document.getElementById('create-another-btn').addEventListener('click', function() {
+                // Reset form
+                document.getElementById('event-form').reset();
+                
+                // Show form and hide success section
+                document.getElementById('event-form').style.display = 'block';
+                document.getElementById('success-section').style.display = 'none';
+            });
+            
+            // View dashboard button
+            document.getElementById('view-dashboard-btn').addEventListener('click', function() {
+                alert('In a real application, this would redirect to your event dashboard');
+                // window.location.href = '/dashboard'; // Example redirect
+            });
+            
+            // Back button functionality - Navigate to sample.html
+            document.getElementById('back-button').addEventListener('click', function() {
+                // Navigate to the sample.html page
+                window.location.href = 'sample.html';
+            });
+        });
+    </script>
+</body>
+</html>
