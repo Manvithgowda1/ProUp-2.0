@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EventPlace - Choose Your Role</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* Header Styles */
+    header {
+      background: linear-gradient(to right, #812a97, #512da8);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: #ffeb3b;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #ffeb3b;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Role Selection Section */
+    .role-selection {
+      padding: 100px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .role-header {
+      margin-bottom: 60px;
+    }
+
+    .role-subtitle {
+      color: #673ab7;
+      font-weight: 700;
+      margin-bottom: 15px;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .role-title {
+      font-size: 48px;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 20px;
+    }
+
+    .role-description {
+      font-size: 20px;
+      color: #718096;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 40px;
+      margin-top: 60px;
+    }
+
+    .role-card {
+      background: white;
+      padding: 50px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid transparent;
+    }
+
+    .role-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(to right, #667eea, #764ba2);
+    }
+
+    .role-card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+      border-color: #673ab7;
+    }
+
+    .role-icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      color: white;
+      font-size: 40px;
+      transition: all 0.3s ease;
+    }
+
+    .role-card:hover .role-icon {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .role-card-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: #2d3748;
+    }
+
+    .role-card-description {
+      font-size: 18px;
+      color: #718096;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .role-features {
+      text-align: left;
+      margin-bottom: 40px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      color: #4a5568;
+    }
+
+    .feature i {
+      color: #48bb78;
+      margin-right: 12px;
+      font-size: 16px;
+    }
+
+    .role-button {
+      background: linear-gradient(to right, #673ab7, #512da8);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 25px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(103, 58, 183, 0.3);
+      text-decoration: none;
+    }
+
+    .role-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(103, 58, 183, 0.4);
+    }
+
+    .role-button.student {
+      background: linear-gradient(to right, #4a90e2, #357abd);
+    }
+
+    .role-button.organizer {
+      background: linear-gradient(to right, #27ae60, #219653);
+    }
+
+    /* Stats Section */
+    .stats {
+      background: linear-gradient(135deg, #673ab7 0%, #512da8 100%);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .stat-item h3 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .stat-item p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    /* Footer */
+    footer {
+      background: #2d3748;
+      color: white;
+      padding: 60px 20px 30px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .footer-column h4 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #ffeb3b;
+    }
+
+    .footer-column a {
+      color: #cbd5e0;
+      text-decoration: none;
+      display: block;
+      margin-bottom: 10px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-column a:hover {
+      color: #ffeb3b;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-link {
+      width: 40px;
+      height: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: #673ab7;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid #4a5568;
+      color: #a0aec0;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4caf50;
+      color: white;
+      padding: 15px 25px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      z-index: 3000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+      }
+      
+      nav {
+        display: flex;
+        gap: 10px;
+      }
+      
+      nav a {
+        margin: 0 10px;
+        font-size: 16px;
+      }
+      
+      .role-selection {
+        padding: 60px 20px;
+      }
+      
+      .role-title {
+        font-size: 36px;
+      }
+      
+      .roles-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .role-card {
+        padding: 40px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    // Header Component
+    const Header = () => {
+      return (
+        <header>
+          <h1>Proup</h1>
+          <nav>
+            <a href="sample.html">Home</a>
+            <a href="event.html">Events</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+          {/* Register Now button removed as requested */}
+        </header>
+      );
+    };
+
+    // Role Selection Component
+    const RoleSelection = () => {
+      const [selectedRole, setSelectedRole] = useState(null);
+
+      const handleRoleSelect = (role) => {
+        setSelectedRole(role);
+        // Show toast notification
+        const event = new CustomEvent('showToast', { 
+          detail: { message: `Welcome ${role === 'student' ? 'Student' : 'Organizer'}!` }
+        });
+        window.dispatchEvent(event);
+        
+        // Redirect to appropriate page after a brief delay
+        setTimeout(() => {
+          if (role === 'student') {
+            window.location.href = 'event.html';
+          } else {
+            window.location.href = 'organizer.html';
+          }
+        }, 1000);
+      };
+
+      const studentFeatures = [
+        "Browse and register for exciting events",
+        "Save events you're interested in",
+        "Get personalized recommendations",
+        "Track your event registrations",
+        "Connect with other students"
+      ];
+
+      const organizerFeatures = [
+        "Create and manage your events",
+        "Track registrations and attendance",
+        "Promote events to targeted audiences",
+        "Access analytics and insights",
+        "Manage event payments and tickets"
+      ];
+
+      return (
+        <section className="role-selection">
+          <div className="role-header">
+            <p className="role-subtitle">Get Started</p>
+            <h1 className="role-title">Choose Your Role</h1>
+            <p className="role-description">
+              Select how you'd like to use EventPlace. Your experience will be tailored to your needs.
+            </p>
+          </div>
+
+          <div className="roles-grid">
+            {/* Student Card */}
+            <div className="role-card">
+              <div className="role-icon">
+                <i className="fas fa-graduation-cap"></i>
+              </div>
+              <h2 className="role-card-title">Student</h2>
+              <p className="role-card-description">
+                Discover and participate in events that match your interests and career goals. 
+                Perfect for students looking to learn, network, and grow.
+              </p>
+              
+              <div className="role-features">
+                {studentFeatures.map((feature, index) => (
+                  <div key={index} className="feature">
+                    <i className="fas fa-check-circle"></i>
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button 
+                className="role-button student"
+                onClick={() => handleRoleSelect('student')}
+              >
+                <i className="fas fa-user-graduate"></i>
+                Continue as Student
+              </button>
+            </div>
+
+            {/* Organizer Card */}
+            <div className="role-card">
+              <div className="role-icon">
+                <i className="fas fa-calendar-alt"></i>
+              </div>
+              <h2 className="role-card-title">Event Organizer</h2>
+              <p className="role-card-description">
+                Create, manage, and promote your events to the right audience. 
+                Perfect for organizations, clubs, and professionals hosting events.
+              </p>
+              
+              <div className="role-features">
+                {organizerFeatures.map((feature, index) => (
+                  <div key={index} className="feature">
+                    <i className="fas fa-check-circle"></i>
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button 
+                className="role-button organizer"
+                onClick={() => handleRoleSelect('organizer')}
+              >
+                <i className="fas fa-tasks"></i>
+                Continue as Organizer
+              </button>
+            </div>
+          </div>
+        </section>
+      );
+    };
+
+    // Stats Section
+    const StatsSection = () => {
+      const stats = [
+        { number: "50,000+", label: "Students Registered" },
+        { number: "2,000+", label: "Event Organizers" },
+        { number: "10,000+", label: "Events Hosted" },
+        { number: "95%", label: "Satisfaction Rate" }
+      ];
+      
+      return (
+        <section className="stats">
+          <div className="stats-grid">
+            {stats.map((stat, index) => (
+              <div key={index} className="stat-item">
+                <h3>{stat.number}</h3>
+                <p>{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      );
+    };
+
+    // Footer Component
+    const Footer = () => {
+      return (
+        <footer>
+          <div className="footer-content">
+            <div className="footer-column">
+              <h4>EventPlace</h4>
+              <p style={{color: '#cbd5e0', marginBottom: '20px'}}>
+                Connecting students with amazing events and empowering organizers to create unforgettable experiences.
+              </p>
+              <div className="social-links">
+                <a href="#" className="social-link"><i className="fab fa-facebook-f"></i></a>
+                <a href="#" className="social-link"><i className="fab fa-twitter"></i></a>
+                <a href="#" className="social-link"><i className="fab fa-instagram"></i></a>
+                <a href="#" className="social-link"><i className="fab fa-linkedin-in"></i></a>
+              </div>
+            </div>
+            
+            <div className="footer-column">
+              <h4>Quick Links</h4>
+              <a href="sample.html">Home</a>
+              <a href="event.html">Events</a>
+              <a href="contact.html">Contact</a>
+              <a href="#">About Us</a>
+              <a href="#">Blog</a>
+            </div>
+            
+            <div className="footer-column">
+              <h4>For Students</h4>
+              <a href="event.html">Browse Events</a>
+              <a href="#">Student Resources</a>
+              <a href="#">Career Guidance</a>
+              <a href="#">Campus Events</a>
+            </div>
+            
+            <div className="footer-column">
+              <h4>For Organizers</h4>
+              <a href="organizer.html">Create Event</a>
+              <a href="organizer.html">Organizer Dashboard</a>
+              <a href="#">Marketing Tools</a>
+              <a href="#">Support Center</a>
+            </div>
+          </div>
+          
+          <div className="footer-bottom">
+            <p>&copy; 2024 EventPlace. All rights reserved.</p>
+          </div>
+        </footer>
+      );
+    };
+
+    // Toast Notification Component
+    const Toast = ({ message, isVisible }) => {
+      if (!isVisible) return null;
+      
+      return (
+        <div className="toast">
+          <i className="fas fa-check-circle"></i>
+          <span>{message}</span>
+        </div>
+      );
+    };
+
+    // Main App Component
+    const App = () => {
+      const [toast, setToast] = useState({ isVisible: false, message: "" });
+
+      // Listen for toast events
+      React.useEffect(() => {
+        const handleToast = (event) => {
+          setToast({ isVisible: true, message: event.detail.message });
+          setTimeout(() => {
+            setToast({ isVisible: false, message: "" });
+          }, 3000);
+        };
+
+        window.addEventListener('showToast', handleToast);
+        
+        return () => {
+          window.removeEventListener('showToast', handleToast);
+        };
+      }, []);
+
+      return (
+        <div>
+          <Header />
+          <RoleSelection />
+          <StatsSection />
+          <Footer />
+          <Toast 
+            message={toast.message}
+            isVisible={toast.isVisible}
+          />
+        </div>
+      );
+    };
+
+    // Render the App
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>

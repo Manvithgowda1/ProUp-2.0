@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements Portfolio | EventHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+
+        body {
+            background-color: #f5f7ff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, #812a97, #512da8);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.9rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: #e11570;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(to right, #812a97, #512da8), url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .btn-large {
+            padding: 12px 35px;
+            font-size: 1.1rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 60px 0;
+            background-color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-card {
+            padding: 30px 20px;
+            border-radius: 10px;
+            background: var(--light);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.8rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        /* Achievements Section */
+        .achievements {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid var(--light-gray);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .achievement-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .achievement-badge {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .certification {
+            background: linear-gradient(135deg, #4cc9f0, #4361ee);
+        }
+
+        .prize {
+            background: linear-gradient(135deg, #f8961e, #f72585);
+        }
+
+        .achievement {
+            background: linear-gradient(135deg, #3a0ca3, #7209b7);
+        }
+
+        .achievement-content {
+            padding: 25px;
+        }
+
+        .achievement-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .achievement-event {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .achievement-date {
+            color: var(--gray);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .achievement-description {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .achievement-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+        }
+
+        .btn-outline-dark {
+            background: transparent;
+            border: 1px solid var(--gray);
+            color: var(--gray);
+        }
+
+        .btn-outline-dark:hover {
+            background: var(--gray);
+            color: white;
+        }
+
+        /* Certificates Section */
+        .certificates {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .certificates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .certificate-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--light-gray);
+        }
+
+        .certificate-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .certificate-image {
+            height: 200px;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 4rem;
+        }
+
+        .certificate-content {
+            padding: 20px;
+        }
+
+        .certificate-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--secondary);
+        }
+
+        .certificate-info {
+            color: var(--gray);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav ul {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .achievements-grid, .certificates-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-trophy"></i>
+                    <span>EventPlace</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="sample.html">Home</a></li>
+                        <li><a href="event.html"> Events</a></li>
+                        <li><a href="qwer.html" class="active">Achievements</a></li>
+                        <li><a href="contact.html">Contact us</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Your Achievement Portfolio</h1>
+            <p>Showcase all your certifications, prizes, and accomplishments from events you've participated in through our platform</p>
+            <button class="btn btn-primary btn-large">Download Portfolio PDF</button>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-number">24</div>
+                    <div class="stat-label">Events Attended</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Certifications</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Prizes Won</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="stat-number">132</div>
+                    <div class="stat-label">Points </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="achievements">
+        <div class="container">
+            <div class="section-title">
+                <h2>Your Achievements</h2>
+                <p>All your accomplishments from events organized through our platform</p>
+            </div>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="certification">Certifications</button>
+                <button class="filter-btn" data-filter="prize">Prizes</button>
+                <button class="filter-btn" data-filter="achievement">Achievements</button>
+            </div>
+            
+            <div class="achievements-grid">
+                <!-- Certification Card -->
+                <div class="achievement-card" data-type="certification">
+                    <div class="achievement-badge certification">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Advanced Web Development</h3>
+                        <div class="achievement-event">
+                            <i class="fas fa-calendar-alt"></i>
+                            Tech Conference 2023
+                        </div>
+                        <div class="achievement-date">
+                            <i class="far fa-clock"></i>
+                            Completed: June 15, 2023
+                        </div>
+                        <p class="achievement-description">
+                            Completed advanced web development workshop with distinction. Demonstrated proficiency in modern frameworks and responsive design.
+                        </p>
+                        <div class="achievement-actions">
+                            <button class="btn btn-primary btn-small">View Certificate</button>
+                            <button class="btn btn-outline-dark btn-small">Share</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Prize Card -->
+                <div class="achievement-card" data-type="prize">
+                    <div class="achievement-badge prize">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">1st Place - Hackathon</h3>
+                        <div class="achievement-event">
+                            <i class="fas fa-calendar-alt"></i>
+                            Innovation Summit 2023
+                        </div>
+                        <div class="achievement-date">
+                            <i class="far fa-clock"></i>
+                            Awarded: August 22, 2023
+                        </div>
+                        <p class="achievement-description">
+                            Won first place in the 48-hour hackathon for developing an innovative solution for sustainable energy management.
+                        </p>
+                        <div class="achievement-actions">
+                            <button class="btn btn-primary btn-small">View Details</button>
+                            <button class="btn btn-outline-dark btn-small">Share</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Achievement Card -->
+                <div class="achievement-card" data-type="achievement">
+                    <div class="achievement-badge achievement">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Top Performer</h3>
+                        <div class="achievement-event">
+                            <i class="fas fa-calendar-alt"></i>
+                            Leadership Workshop 2023
+                        </div>
+                        <div class="achievement-date">
+                            <i class="far fa-clock"></i>
+                            Achieved: May 10, 2023
+                        </div>
+                        <p class="achievement-description">
+                            Recognized as top performer in leadership skills assessment and team collaboration exercises.
+                        </p>
+                        <div class="achievement-actions">
+                            <button class="btn btn-primary btn-small">View Badge</button>
+                            <button class="btn btn-outline-dark btn-small">Share</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Certification Card -->
+                <div class="achievement-card" data-type="certification">
+                    <div class="achievement-badge certification">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Data Science Fundamentals</h3>
+                        <div class="achievement-event">
+                            <i class="fas fa-calendar-alt"></i>
+                            Data Analytics Conference
+                        </div>
+                        <div class="achievement-date">
+                            <i class="far fa-clock"></i>
+                            Completed: April 5, 2023
+                        </div>
+                        <p class="achievement-description">
+                            Successfully completed data science fundamentals course with hands-on projects in Python and machine learning.
+                        </p>
+                        <div class="achievement-actions">
+                            <button class="btn btn-primary btn-small">View Certificate</button>
+                            <button class="btn btn-outline-dark btn-small">Share</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Prize Card -->
+                <div class="achievement-card" data-type="prize">
+                    <div class="achievement-badge prize">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Best Presentation</h3>
+                        <div class="achievement-event">
+                            <i class="fas fa-calendar-alt"></i>
+                            Business Symposium 2023
+                        </div>
+                        <div class="achievement-date">
+                            <i class="far fa-clock"></i>
+                            Awarded: March 18, 2023
+                        </div>
+                        <p class="achievement-description">
+                            Received award for best presentation on innovative business strategies for digital transformation.
+                        </p>
+                        <div class="achievement-actions">
+                            <button class="btn btn-primary btn-small">View Details</button>
+                            <button class="btn btn-outline-dark btn-small">Share</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Achievement Card -->
+                <div class="achievement-card" data-type="achievement">
+                    <div class="achievement-badge achievement">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <h3 class="achievement-title">Perfect Attendance</h3>
+                        <div class="achievement-event">
+                            <i class="fas fa-calendar-alt"></i>
+                            Professional Development Series
+                        </div>
+                        <div class="achievement-date">
+                            <i class="far fa-clock"></i>
+                            Achieved: February 28, 2023
+                        </div>
+                        <p class="achievement-description">
+                            Maintained perfect attendance throughout the 12-week professional development program.
+                        </p>
+                        <div class="achievement-actions">
+                            <button class="btn btn-primary btn-small">View Badge</button>
+                            <button class="btn btn-outline-dark btn-small">Share</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section class="certificates">
+        <div class="container">
+            <div class="section-title">
+                <h2>Your Certificates</h2>
+                <p>Digital certificates for all completed events and courses</p>
+            </div>
+            
+            <div class="certificates-grid">
+                <div class="certificate-card">
+                    <div class="certificate-image">
+                        <i class="fas fa-file-certificate"></i>
+                    </div>
+                    <div class="certificate-content">
+                        <h3 class="certificate-title">Web Development Mastery</h3>
+                        <div class="certificate-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            Issued: June 15, 2023
+                        </div>
+                        <p>Completed advanced web development certification with honors.</p>
+                        <div class="achievement-actions">
+                            <button class="btn btn-primary btn-small">View</button>
+                            <button class="btn btn-outline-dark btn-small">Download</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certificate-card">
+                    <div class="certificate-image">
+                        <i class="fas fa-file-certificate"></i>
+                    </div>
+                    <div class="certificate-content">
+                        <h3 class="certificate-title">Data Analytics Professional</h3>
+                        <div class="certificate-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            Issued: April 5, 2023
+                        </div>
+                        <p>Certified data analytics professional with specialization in Python.</p>
+                        <div class="achievement-actions">
+                            <button class="btn btn-primary btn-small">View</button>
+                            <button class="btn btn-outline-dark btn-small">Download</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="certificate-card">
+                    <div class="certificate-image">
+                        <i class="fas fa-file-certificate"></i>
+                    </div>
+                    <div class="certificate-content">
+                        <h3 class="certificate-title">Leadership Excellence</h3>
+                        <div class="certificate-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            Issued: May 10, 2023
+                        </div>
+                        <p>Advanced leadership certification for management professionals.</p>
+                        <div class="achievement-actions">
+                            <button class="btn btn-primary btn-small">View</button>
+                            <button class="btn btn-outline-dark btn-small">Download</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Showcase Your Achievements</h2>
+            <p>Share your portfolio with employers, add to your LinkedIn profile, or include in your resume</p>
+            <button class="btn btn-primary btn-large">Share Portfolio</button>
+        </div>
+    </section>
+<script>
+        // Filter functionality for achievements
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const achievementCards = document.querySelectorAll('.achievement-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    achievementCards.forEach(card => {
+                        if (filterValue === 'all') {
+                            card.style.display = 'block';
+                        } else {
+                            if (card.getAttribute('data-type') === filterValue) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // Simulate download button click
+            document.querySelector('.btn-large').addEventListener('click', function() {
+                alert('Your portfolio PDF is being generated. You will receive it via email shortly.');
+            });
+        });
+    </script>
+</body>
+</html>
