@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+
+    /* Header Styles */
+    header {
+      background: linear-gradient(to right, #673ab7, #512da8);
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 32px;
+      font-weight: 700;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 500;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: #ffeb3b;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: #ffeb3b;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .register-now {
+      background: #ffeb3b;
+      color: #512da8;
+      padding: 10px 20px;
+      border-radius: 25px;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .register-now:hover {
+      background: #512da8;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(to right, #6a1b9a, #512da8);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="%23ffffff" opacity="0.1"><polygon points="0,0 1000,50 1000,100 0,100"></polygon></svg>');
+      background-size: cover;
+    }
+
+    .hero h2 {
+      font-size: 42px;
+      margin-bottom: 15px;
+      color: white;
+      position: relative;
+    }
+
+    .hero p {
+      font-size: 20px;
+      color: #e1bee7;
+      position: relative;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      padding: 40px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      margin: 40px auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+    }
+
+    .container h2 {
+      color: #512da8;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    /* Contact Info */
+    .contact-info {
+      padding: 20px;
+    }
+
+    .contact-info h2 {
+      margin-top: 30px;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .contact-info p {
+      font-size: 18px;
+      margin-bottom: 20px;
+      padding-left: 34px;
+      color: #555;
+    }
+
+    .contact-card {
+      background: #f9f7ff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-left: 4px solid #673ab7;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(103, 58, 183, 0.15);
+    }
+
+    /* Contact Form */
+    .contact-form {
+      padding: 20px;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: #673ab7;
+      box-shadow: 0 0 0 2px rgba(103, 58, 183, 0.2);
+      outline: none;
+    }
+
+    .contact-form textarea {
+      height: 150px;
+      resize: vertical;
+    }
+
+    .send-btn {
+      background: linear-gradient(to right, #673ab7, #512da8);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 18px;
+      width: 100%;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .send-btn:hover {
+      background: linear-gradient(to right, #512da8, #673ab7);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(103, 58, 183, 0.4);
+    }
+
+    .send-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Success Message */
+    .success-message {
+      background: #4caf50;
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 20px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Map Container */
+    .map-container {
+      margin-top: 30px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Social Links */
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: #673ab7;
+      color: white;
+      border-radius: 50%;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover {
+      background: #512da8;
+      transform: translateY(-3px);
+    }
+
+    /* Loading Animation */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+      }
+      
+      nav {
+        display: flex;
+        gap: 10px;
+      }
+      
+      nav a {
+        margin: 0 10px;
+        font-size: 16px;
+      }
+      
+      .hero {
+        padding: 60px 20px;
+      }
+      
+      .hero h2 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    // Header Component
+    const Header = () => {
+      const [isMenuOpen, setIsMenuOpen] = useState(false);
+      
+      return (
+        <header>
+          <h1>EventPlace</h1>
+          <nav className={isMenuOpen ? "nav-open" : ""}>
+            <a href="sample.html">Home</a>
+            <a href="event.html">Events</a>
+            <a href="contact.html">Contact</a>
+          </nav>
+          <button className="register-now">Register Now</button>
+          <button 
+            className="mobile-menu-btn" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            style={{display: 'none', background: 'none', border: 'none', color: 'white', fontSize: '24px'}}
+          >
+            <i className="fas fa-bars"></i>
+          </button>
+        </header>
+      );
+    };
+
+    // Hero Component
+    const Hero = () => {
+      return (
+        <section className="hero">
+          <p>Find Your Next Experience</p>
+          <h2>Contact Us</h2>
+        </section>
+      );
+    };
+
+    // Contact Info Component
+    const ContactInfo = () => {
+      const contactItems = [
+        {
+          icon: 'fas fa-map-marker-alt',
+          title: 'Address',
+          content: '4671 PES College, Mandya',
+          description: 'Visit our campus anytime during business hours'
+        },
+        {
+          icon: 'fas fa-phone',
+          title: 'Phone',
+          content: '+91 8431588553',
+          description: 'Mon-Fri from 9am to 6pm'
+        },
+        {
+          icon: 'fas fa-envelope',
+          title: 'Email',
+          content: 'abcd@email.com',
+          description: 'Send us an email anytime'
+        }
+      ];
+
+      return (
+        <div className="contact-info">
+          <h2>Get In Touch</h2>
+          <p>We'd love to hear from you. Choose the most convenient way to contact us.</p>
+          
+          {contactItems.map((item, index) => (
+            <div key={index} className="contact-card">
+              <h2><i className={item.icon}></i> {item.title}</h2>
+              <p><strong>{item.content}</strong></p>
+              <p style={{fontSize: '14px', color: '#777'}}>{item.description}</p>
+            </div>
+          ))}
+          
+          <div className="social-links">
+            <a href="#" className="social-link"><i className="fab fa-facebook-f"></i></a>
+            <a href="#" className="social-link"><i className="fab fa-twitter"></i></a>
+            <a href="#" className="social-link"><i className="fab fa-instagram"></i></a>
+            <a href="#" className="social-link"><i className="fab fa-linkedin-in"></i></a>
+          </div>
+          
+          <div className="map-container">
+            <div style={{height: '200px', background: '#e9ecef', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '8px'}}>
+              <i className="fas fa-map" style={{fontSize: '40px', color: '#673ab7'}}></i>
+              <p style={{marginLeft: '10px', color: '#673ab7'}}>Interactive Map Would Go Here</p>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // Contact Form Component
+    const ContactForm = () => {
+      const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+      });
+      const [isSubmitting, setIsSubmitting] = useState(false);
+      const [isSubmitted, setIsSubmitted] = useState(false);
+
+      const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+          ...prevState,
+          [name]: value
+        }));
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        
+        // Simulate API call
+        setTimeout(() => {
+          setIsSubmitting(false);
+          setIsSubmitted(true);
+          setFormData({ name: '', email: '', message: '' });
+          
+          // Hide success message after 5 seconds
+          setTimeout(() => setIsSubmitted(false), 5000);
+        }, 1500);
+      };
+
+      return (
+        <div className="contact-form">
+          <h2>Send Message</h2>
+          <p>Fill out the form below and we'll get back to you as soon as possible.</p>
+          
+          <form onSubmit={handleSubmit}>
+            <input 
+              type="text" 
+              name="name"
+              placeholder="Full Name" 
+              value={formData.name}
+              onChange={handleChange}
+              required 
+            />
+            <input 
+              type="email" 
+              name="email"
+              placeholder="Email" 
+              value={formData.email}
+              onChange={handleChange}
+              required 
+            />
+            <textarea 
+              name="message"
+              placeholder="Type your message..." 
+              value={formData.message}
+              onChange={handleChange}
+              required
+            ></textarea>
+            <button 
+              type="submit" 
+              className="send-btn"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <div className="loading"></div> : 'Send Message'}
+            </button>
+          </form>
+          
+          {isSubmitted && (
+            <div className="success-message">
+              <i className="fas fa-check-circle" style={{marginRight: '10px'}}></i>
+              Thank you! Your message has been sent successfully.
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    // Main App Component
+    const App = () => {
+      return (
+        <div>
+          <Header />
+          <Hero />
+          <div className="container">
+            <ContactInfo />
+            <ContactForm />
+          </div>
+        </div>
+      );
+    };
+
+    // Render the App
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
