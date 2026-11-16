@@ -368,24 +368,42 @@ Mounted at prefix `/api/v1/students` with OpenAPI tag `Students`.
 - **Endpoint:** `GET /api/v1/students/me/achievements`
 - **Access:** Role: `student`
 - **Headers:** `Authorization: Bearer <student_token>`
-- **Description:** Returns the student's verified achievements, awards, and credentials earned through event participation (satisfies PRD Section 5.2 Achievements Page).
+- **Description:** Returns the student's verified achievements, participation metrics (events attended, events won), and gamified points earned through event participation (satisfies PRD Section 5.2 Achievements Page).
+- **Points Rules:**
+  - `+5` points per event attended (`attendance_status == "PRESENT"`)
+  - `+20` points for 1st place (`rank == 1`)
+  - `+15` points for 2nd place (`rank == 2`)
+  - `+10` points for 3rd place (`rank == 3`)
 - **Response (200 OK):**
 ```json
 {
   "success": true,
   "message": "Success",
-  "data": [
-    {
-      "id": 1,
-      "achievement_id": 1,
-      "name": "First Place - Backend Sprint 2026",
-      "description": "Awarded for highest score in the National Systems Challenge",
-      "event_id": 1,
-      "event_title": "National Backend Python Challenge",
-      "certificate_url": "https://storage.proup.io/certs/cert-101.pdf",
-      "awarded_at": "2026-10-25T14:00:00Z"
-    }
-  ]
+  "data": {
+    "events_attended": 3,
+    "events_won": 1,
+    "points_earned": 50,
+    "achievements_count": 1,
+    "breakdown": {
+      "attendance_points": 15,
+      "podium_points": 35,
+      "rank_1_count": 1,
+      "rank_2_count": 1,
+      "rank_3_count": 0
+    },
+    "achievements": [
+      {
+        "id": 1,
+        "achievement_id": 1,
+        "name": "First Place - Backend Sprint 2026",
+        "description": "Awarded for highest score in the National Systems Challenge",
+        "event_id": 1,
+        "event_title": "National Backend Python Challenge",
+        "certificate_url": "https://storage.proup.io/certs/cert-101.pdf",
+        "awarded_at": "2026-10-25T14:00:00Z"
+      }
+    ]
+  }
 }
 ```
 

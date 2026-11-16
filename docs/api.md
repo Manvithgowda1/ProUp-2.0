@@ -227,7 +227,44 @@ Error responses from FastAPI exceptions:
 #### 2.4 Get Student Achievements
 - **GET** `/api/v1/students/me/achievements`
 - **Access:** Student
-- **Description:** Returns the student's verified achievements and participation credentials (PRD Section 5.2).
+- **Description:** Returns the student's verified achievements, participation metrics (events attended, events won), and gamified points earned (PRD Section 5.2).
+- **Points Allocation:**
+  - `+5` points per event attended (`attendance_status == PRESENT`)
+  - `+20` points for 1st place (`rank == 1`)
+  - `+15` points for 2nd place (`rank == 2`)
+  - `+10` points for 3rd place (`rank == 3`)
+- **Response (200 OK):**
+```json
+{
+  "success": true,
+  "message": "Success",
+  "data": {
+    "events_attended": 3,
+    "events_won": 1,
+    "points_earned": 50,
+    "achievements_count": 1,
+    "breakdown": {
+      "attendance_points": 15,
+      "podium_points": 35,
+      "rank_1_count": 1,
+      "rank_2_count": 1,
+      "rank_3_count": 0
+    },
+    "achievements": [
+      {
+        "id": 1,
+        "achievement_id": 1,
+        "name": "First Place Winner",
+        "description": "1st in Python challenge",
+        "event_id": 1,
+        "event_title": "National Backend Python Challenge",
+        "certificate_url": "https://certs.proup.io/first-place.pdf",
+        "awarded_at": "2026-11-01T12:00:00Z"
+      }
+    ]
+  }
+}
+```
 
 #### 2.5 Get Student Event Registrations ("My Events")
 - **GET** `/api/v1/students/me/registrations`
